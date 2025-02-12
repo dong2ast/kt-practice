@@ -1,6 +1,7 @@
 package com.demo.kt.domain.member.controller;
 
 import com.demo.kt.domain.member.dto.LoginRequestDto;
+import com.demo.kt.domain.member.dto.MemberDetailDto;
 import com.demo.kt.domain.member.dto.SignUpDto;
 import com.demo.kt.global.common.dto.ApiResponse;
 import com.demo.kt.global.security.jwt.TokenDto;
@@ -26,4 +27,8 @@ public interface MemberApi {
     @Operation(summary = "회원탈퇴")
     @SecurityRequirement(name = "JWT Authorization")
     ResponseEntity<ApiResponse<?>> withdraw(Principal principal);
+
+    @Operation(summary = "회원 정보 상세")
+    @SecurityRequirement(name = "JWT Authorization")
+    ResponseEntity<ApiResponse<MemberDetailDto>> detail(Principal principal);
 }

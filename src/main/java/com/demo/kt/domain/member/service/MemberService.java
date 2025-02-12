@@ -1,6 +1,7 @@
 package com.demo.kt.domain.member.service;
 
 import com.demo.kt.domain.member.dto.LoginRequestDto;
+import com.demo.kt.domain.member.dto.MemberDetailDto;
 import com.demo.kt.domain.member.dto.SignUpDto;
 import com.demo.kt.domain.member.model.Member;
 import com.demo.kt.domain.member.repository.MemberRepository;
@@ -57,6 +58,13 @@ public class MemberService {
                 .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR));
 
         memberRepository.delete(member);
+    }
+
+    public MemberDetailDto detail(String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR));
+
+        return MemberDetailDto.of(member);
     }
 
 

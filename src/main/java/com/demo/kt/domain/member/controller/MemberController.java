@@ -1,6 +1,7 @@
 package com.demo.kt.domain.member.controller;
 
 import com.demo.kt.domain.member.dto.LoginRequestDto;
+import com.demo.kt.domain.member.dto.MemberDetailDto;
 import com.demo.kt.domain.member.dto.SignUpDto;
 import com.demo.kt.domain.member.service.MemberService;
 import com.demo.kt.global.common.dto.ApiResponse;
@@ -53,5 +54,11 @@ public class MemberController implements MemberApi {
     public ResponseEntity<ApiResponse<?>> withdraw(Principal principal) {
         memberService.withdraw(principal.getName());
         return ResponseEntity.ok(ApiResponse.success(SuccessType.WITHDRAW_SUCCESS));
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse<MemberDetailDto>> detail(Principal principal) {
+        return ResponseEntity.ok(ApiResponse.success(SuccessType.MEMBER_DETAIL_SUCCESS,
+                memberService.detail(principal.getName())));
     }
 }
