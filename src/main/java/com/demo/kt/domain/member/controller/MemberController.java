@@ -1,15 +1,18 @@
 package com.demo.kt.domain.member.controller;
 
 import com.demo.kt.domain.member.dto.LoginRequestDto;
+import com.demo.kt.domain.member.dto.MemberInfoDto;
 import com.demo.kt.domain.member.dto.SignUpDto;
 import com.demo.kt.domain.member.service.MemberService;
 import com.demo.kt.global.common.dto.ApiResponse;
 import com.demo.kt.global.enums.SuccessType;
 import com.demo.kt.global.security.jwt.TokenDto;
+import jakarta.validation.Valid;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +26,7 @@ public class MemberController implements MemberApi {
 
     @Override
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<String>> singUp(@RequestBody SignUpDto signUpDto) {
+    public ResponseEntity<ApiResponse<String>> singUp(@RequestBody @Valid SignUpDto signUpDto) {
         return ResponseEntity.ok(
                 ApiResponse.success(SuccessType.SIGNUP_SUCCESS, memberService.signUp(signUpDto)));
     }
@@ -45,5 +48,12 @@ public class MemberController implements MemberApi {
         return ResponseEntity.ok(
                 ApiResponse.success(SuccessType.LOGOUT_SUCCESS)
         );
+    }
+
+    @Override
+    @PutMapping
+    public ResponseEntity<ApiResponse<MemberInfoDto>> update(Principal principal, @RequestBody MemberInfoDto memberInfoDto) {
+        return ResponseEntity.ok(ApiResponse.success(SuccessType.UPDATE_INFO_SUCCESS, memberService.update(
+                principal.getName(), memberInfoDto)));
     }
 }

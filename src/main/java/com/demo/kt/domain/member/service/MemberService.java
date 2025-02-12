@@ -1,6 +1,7 @@
 package com.demo.kt.domain.member.service;
 
 import com.demo.kt.domain.member.dto.LoginRequestDto;
+import com.demo.kt.domain.member.dto.MemberInfoDto;
 import com.demo.kt.domain.member.dto.SignUpDto;
 import com.demo.kt.domain.member.model.Member;
 import com.demo.kt.domain.member.repository.MemberRepository;
@@ -49,6 +50,15 @@ public class MemberService {
     @Transactional
     public void logout(String email) {
         jwtProvider.deleteRefreshToken(email);
+    }
+
+    @Transactional
+    public MemberInfoDto update(String email, MemberInfoDto memberInfoDto) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR));
+
+        member.updateProfile(memberInfoDto.name(), memberInfoDto.phone());
+        return MemberInfoDto.of(member);
     }
 
 

@@ -27,4 +27,9 @@ public class Member extends BaseTimeEntity {
     private String name;
     private String phone;
 
+    public void updateProfile(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
+
 }
