@@ -1,0 +1,49 @@
+package com.demo.kt.domain.member.controller;
+
+import com.demo.kt.domain.member.dto.LoginRequestDto;
+import com.demo.kt.domain.member.dto.SignUpDto;
+import com.demo.kt.domain.member.service.MemberService;
+import com.demo.kt.global.common.dto.ApiResponse;
+import com.demo.kt.global.enums.SuccessType;
+import com.demo.kt.global.security.jwt.TokenDto;
+import java.security.Principal;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/api/v1/members")
+public class MemberController implements MemberApi {
+
+    private final MemberService memberService;
+
+    @Override
+    @PostMapping("/signup")
+    public ResponseEntity<ApiResponse<String>> singUp(@RequestBody SignUpDto signUpDto) {
+        return ResponseEntity.ok(
+                ApiResponse.success(SuccessType.SIGNUP_SUCCESS, memberService.signUp(signUpDto)));
+    }
+
+    @Override
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<TokenDto>> login(
+            @RequestBody LoginRequestDto loginRequestDto) {
+        return ResponseEntity.ok(
+                ApiResponse.success(SuccessType.LOGIN_SUCCESS,
+                        memberService.login(loginRequestDto)));
+    }
+
+    @Override
+    @PostMapping
+    public ResponseEntity<ApiResponse<?>> logout(
+            Principal principal) {
+        memberService.logout(principal.getName());
+        return ResponseEntity.ok(
+                ApiResponse.success(SuccessType.LOGOUT_SUCCESS)
+        );
+    }
+}
