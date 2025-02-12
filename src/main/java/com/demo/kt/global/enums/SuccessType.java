@@ -19,7 +19,13 @@ public enum SuccessType {
     /**
      * 201 OK
      */
-    SIGNUP_SUCCESS(HttpStatus.CREATED, "회원가입에 성공하였습니다");
+    SIGNUP_SUCCESS(HttpStatus.CREATED, "회원가입에 성공하였습니다"),
+
+    /**
+     * 204 OK
+     */
+    WITHDRAW_SUCCESS(HttpStatus.NO_CONTENT, "회원 탈퇴에 성공하였습니다"),
+    ;
 
     private final HttpStatus httpStatus;
     private final String message;

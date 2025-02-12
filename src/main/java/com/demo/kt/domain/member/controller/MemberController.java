@@ -9,6 +9,7 @@ import com.demo.kt.global.security.jwt.TokenDto;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,5 +46,12 @@ public class MemberController implements MemberApi {
         return ResponseEntity.ok(
                 ApiResponse.success(SuccessType.LOGOUT_SUCCESS)
         );
+    }
+
+    @Override
+    @DeleteMapping
+    public ResponseEntity<ApiResponse<?>> withdraw(Principal principal) {
+        memberService.withdraw(principal.getName());
+        return ResponseEntity.ok(ApiResponse.success(SuccessType.WITHDRAW_SUCCESS));
     }
 }

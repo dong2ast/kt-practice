@@ -51,5 +51,13 @@ public class MemberService {
         jwtProvider.deleteRefreshToken(email);
     }
 
+    @Transactional
+    public void withdraw(String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR));
+
+        memberRepository.delete(member);
+    }
+
 
 }

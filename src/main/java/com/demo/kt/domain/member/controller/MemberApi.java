@@ -22,4 +22,8 @@ public interface MemberApi {
     @Operation(summary = "로그아웃")
     @SecurityRequirement(name = "JWT Authorization")
     ResponseEntity<ApiResponse<?>> logout(Principal principal);
+
+    @Operation(summary = "회원탈퇴")
+    @SecurityRequirement(name = "JWT Authorization")
+    ResponseEntity<ApiResponse<?>> withdraw(Principal principal);
 }
