@@ -1,6 +1,7 @@
 package com.demo.kt.domain.member.service;
 
 import com.demo.kt.domain.member.dto.LoginRequestDto;
+import com.demo.kt.domain.member.dto.LoginResponseDto;
 import com.demo.kt.domain.member.dto.MemberDetailDto;
 import com.demo.kt.domain.member.dto.SignUpDto;
 import com.demo.kt.domain.member.model.Member;
@@ -8,7 +9,6 @@ import com.demo.kt.domain.member.repository.MemberRepository;
 import com.demo.kt.global.enums.ErrorType;
 import com.demo.kt.global.exception.model.CustomException;
 import com.demo.kt.global.security.jwt.JwtProvider;
-import com.demo.kt.global.security.jwt.TokenDto;
 import com.demo.kt.global.security.utils.UserAuthentication;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ public class MemberService {
     }
 
     @Transactional
-    public TokenDto login(LoginRequestDto loginRequestDto) {
+    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         Member member = memberRepository.findByEmail(loginRequestDto.email())
                 .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR));
 
@@ -43,8 +43,9 @@ public class MemberService {
             throw new CustomException(ErrorType.WRONG_ID_PASSWORD);
         }
 
-        return jwtProvider.issueToken(new UserAuthentication(loginRequestDto.email(),
-                null, null));
+        return new LoginResponseDto(member.getName(),
+                jwtProvider.issueToken(new UserAuthentication(loginRequestDto.email(),
+                        null, null)));
     }
 
     @Transactional

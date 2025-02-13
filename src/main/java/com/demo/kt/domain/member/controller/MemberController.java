@@ -1,12 +1,12 @@
 package com.demo.kt.domain.member.controller;
 
 import com.demo.kt.domain.member.dto.LoginRequestDto;
+import com.demo.kt.domain.member.dto.LoginResponseDto;
 import com.demo.kt.domain.member.dto.MemberDetailDto;
 import com.demo.kt.domain.member.dto.SignUpDto;
 import com.demo.kt.domain.member.service.MemberService;
 import com.demo.kt.global.common.dto.ApiResponse;
 import com.demo.kt.global.enums.SuccessType;
-import com.demo.kt.global.security.jwt.TokenDto;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +32,7 @@ public class MemberController implements MemberApi {
 
     @Override
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<TokenDto>> login(
+    public ResponseEntity<ApiResponse<LoginResponseDto>> login(
             @RequestBody LoginRequestDto loginRequestDto) {
         return ResponseEntity.ok(
                 ApiResponse.success(SuccessType.LOGIN_SUCCESS,
