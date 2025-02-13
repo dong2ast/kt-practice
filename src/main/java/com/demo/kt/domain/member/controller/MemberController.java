@@ -11,6 +11,7 @@ import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +58,7 @@ public class MemberController implements MemberApi {
     }
 
     @Override
+    @GetMapping()
     public ResponseEntity<ApiResponse<MemberDetailDto>> detail(Principal principal) {
         return ResponseEntity.ok(ApiResponse.success(SuccessType.MEMBER_DETAIL_SUCCESS,
                 memberService.detail(principal.getName())));
