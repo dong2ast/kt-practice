@@ -2,6 +2,8 @@ package com.demo.kt.domain.member.controller;
 
 import com.demo.kt.domain.member.dto.LoginRequestDto;
 import com.demo.kt.domain.member.dto.MemberInfoDto;
+import com.demo.kt.domain.member.dto.LoginResponseDto;
+import com.demo.kt.domain.member.dto.MemberDetailDto;
 import com.demo.kt.domain.member.dto.SignUpDto;
 import com.demo.kt.domain.member.service.MemberService;
 import com.demo.kt.global.common.dto.ApiResponse;
@@ -11,6 +13,8 @@ import jakarta.validation.Valid;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +37,7 @@ public class MemberController implements MemberApi {
 
     @Override
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<TokenDto>> login(
+    public ResponseEntity<ApiResponse<LoginResponseDto>> login(
             @RequestBody LoginRequestDto loginRequestDto) {
         return ResponseEntity.ok(
                 ApiResponse.success(SuccessType.LOGIN_SUCCESS,
@@ -55,5 +59,19 @@ public class MemberController implements MemberApi {
     public ResponseEntity<ApiResponse<MemberInfoDto>> update(Principal principal, @RequestBody MemberInfoDto memberInfoDto) {
         return ResponseEntity.ok(ApiResponse.success(SuccessType.UPDATE_INFO_SUCCESS, memberService.update(
                 principal.getName(), memberInfoDto)));
+    }
+
+    @Override
+    @DeleteMapping
+    public ResponseEntity<ApiResponse<?>> withdraw(Principal principal) {
+        memberService.withdraw(principal.getName());
+        return ResponseEntity.ok(ApiResponse.success(SuccessType.WITHDRAW_SUCCESS));
+    }
+
+    @Override
+    @GetMapping()
+    public ResponseEntity<ApiResponse<MemberDetailDto>> detail(Principal principal) {
+        return ResponseEntity.ok(ApiResponse.success(SuccessType.MEMBER_DETAIL_SUCCESS,
+                memberService.detail(principal.getName())));
     }
 }
