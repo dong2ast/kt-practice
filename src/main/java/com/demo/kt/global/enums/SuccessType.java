@@ -18,6 +18,8 @@ public enum SuccessType {
     UPDATE_INFO_SUCCESS(HttpStatus.OK, "회원 정보 수정에 성공하였습니다."),
     MEMBER_DETAIL_SUCCESS(HttpStatus.OK, "회원 상세 조회에 성공하였습니다."),
     SITTER_HOME_SUCCESS(HttpStatus.OK, "펫시터 홈 조회에 성공하였습니다."),
+    SITTER_PROFILE_SUCCESS(HttpStatus.OK, "펫시터 프로필 조회에 성공하였습니다."),
+    SITTER_PROFILE_UPDATE_SUCCESS(HttpStatus.OK, "펫시터 프로필 수정에 성공하였습니다."),
 
     /**
      * 201 OK
