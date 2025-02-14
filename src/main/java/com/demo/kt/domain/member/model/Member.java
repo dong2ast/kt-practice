@@ -31,7 +31,7 @@ public class Member extends BaseTimeEntity {
     private String phone;
 
     @Setter
-    @OneToOne(mappedBy = "member")
+    @OneToOne(mappedBy = "member", orphanRemoval = true)
     private PetSitter petSitter;
 
     public void updateProfile(String name, String phone) {

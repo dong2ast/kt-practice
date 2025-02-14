@@ -26,5 +26,9 @@ public interface SitterApi {
     ResponseEntity<ApiResponse<SitterProfileResponseDto>> profile(Principal principal);
 
     @Operation(summary = "펫시터 프로필 수정")
-    ResponseEntity<ApiResponse<?>> update(Principal principal, SitterProfileUpdateDto sitterProfileUpdateDto);
+    ResponseEntity<ApiResponse<?>> update(Principal principal,
+            SitterProfileUpdateDto sitterProfileUpdateDto);
+
+    @Operation(summary = "펫시터 프로필 삭제")
+    ResponseEntity<ApiResponse<?>> delete(Principal principal);
 }

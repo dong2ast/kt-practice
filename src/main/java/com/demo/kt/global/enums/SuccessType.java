@@ -30,6 +30,7 @@ public enum SuccessType {
      * 204 OK
      */
     WITHDRAW_SUCCESS(HttpStatus.NO_CONTENT, "회원 탈퇴에 성공하였습니다"),
+    DELETE_SITTER_PROFILE_SUCCESS(HttpStatus.NO_CONTENT, "펫시터 탈퇴에 성공하였습니다"),
     ;
 
     private final HttpStatus httpStatus;

@@ -10,6 +10,7 @@ import com.demo.kt.global.enums.SuccessType;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -52,5 +53,12 @@ public class SitterController implements SitterApi {
             @RequestBody SitterProfileUpdateDto sitterProfileUpdateDto) {
         sitterService.update(principal.getName(), sitterProfileUpdateDto);
         return ResponseEntity.ok(ApiResponse.success(SuccessType.SITTER_PROFILE_UPDATE_SUCCESS));
+    }
+
+    @Override
+    @DeleteMapping
+    public ResponseEntity<ApiResponse<?>> delete(Principal principal) {
+        sitterService.delete(principal.getName());
+        return ResponseEntity.ok(ApiResponse.success(SuccessType.DELETE_SITTER_PROFILE_SUCCESS));
     }
 }

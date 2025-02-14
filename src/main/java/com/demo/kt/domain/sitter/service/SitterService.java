@@ -57,4 +57,12 @@ public class SitterService {
         petSitter.updateProfile(sitterProfileUpdateDto);
     }
 
+    @Transactional
+    public void delete(String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR));
+
+        member.setPetSitter(null);
+    }
+
 }
