@@ -33,7 +33,7 @@ public class SitterService {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR));
 
-        return new SitterHomeDto(member.getPetSitter().getIsRegistered());
+        return new SitterHomeDto(member.isSitter());
     }
 
 }
