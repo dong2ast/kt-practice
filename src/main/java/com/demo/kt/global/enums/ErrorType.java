@@ -34,7 +34,8 @@ public enum ErrorType {
     /**
      * 403 FORBIDDEN
      */
-    WRONG_ID_PASSWORD(HttpStatus.FORBIDDEN, "아이디 혹은 비밀번호가 잘못되었습니다"),
+    WRONG_ID_PASSWORD(HttpStatus.FORBIDDEN, "아이디 혹은 비밀번호가 잘못되었습니다."),
+    NOT_SITTER(HttpStatus.FORBIDDEN, "펫시터로 등록되어 있지 않습니다."),
 
     /**
      * 404 NOT FOUND
