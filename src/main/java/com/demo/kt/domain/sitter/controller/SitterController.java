@@ -49,7 +49,7 @@ public class SitterController implements SitterApi {
     @Override
     @PutMapping
     public ResponseEntity<ApiResponse<?>> update(Principal principal,
-            SitterProfileUpdateDto sitterProfileUpdateDto) {
+            @RequestBody SitterProfileUpdateDto sitterProfileUpdateDto) {
         sitterService.update(principal.getName(), sitterProfileUpdateDto);
         return ResponseEntity.ok(ApiResponse.success(SuccessType.SITTER_PROFILE_UPDATE_SUCCESS));
     }
