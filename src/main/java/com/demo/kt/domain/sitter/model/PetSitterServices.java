@@ -1,5 +1,6 @@
 package com.demo.kt.domain.sitter.model;
 
+import com.demo.kt.domain.sitter.dto.ServiceDetailDto;
 import com.demo.kt.global.common.model.BaseTimeEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -45,4 +46,11 @@ public class PetSitterServices extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "pet_sitter_id")
     private PetSitter petSitter;
+
+    public void update(ServiceDetailDto serviceDetailDto, List<Schedule> schedules) {
+        this.location = serviceDetailDto.location();
+        this.species = serviceDetailDto.species();
+        this.price = serviceDetailDto.price();
+        this.schedules.addAll(schedules);
+    }
 }

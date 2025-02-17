@@ -3,8 +3,10 @@ package com.demo.kt.domain.sitter.dto;
 import com.demo.kt.domain.sitter.model.PetSitter;
 import com.demo.kt.domain.sitter.model.PetSitterServices;
 import java.util.List;
+import java.util.Objects;
 
 public record ServiceDetailResponseDto(
+        Long id,
         String location,
         String species,
         Long price,
@@ -14,8 +16,9 @@ public record ServiceDetailResponseDto(
 
     public static ServiceDetailResponseDto of(PetSitter petSitter,
             PetSitterServices petSitterServices, List<ScheduleDto> scheduleDtos) {
-        return new ServiceDetailResponseDto(petSitterServices.getLocation(),
+        return new ServiceDetailResponseDto(petSitterServices.getId(),
+                petSitterServices.getLocation(),
                 petSitterServices.getSpecies(), petSitterServices.getPrice(), scheduleDtos,
-                petSitterServices.getPetSitter().equals(petSitter));
+                Objects.equals(petSitterServices.getPetSitter().getId(), petSitter.getId()));
     }
 }

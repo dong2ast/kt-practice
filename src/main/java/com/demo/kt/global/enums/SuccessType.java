@@ -25,6 +25,7 @@ public enum SuccessType {
     UPDATE_CODE_DETAIL_SUCCESS(HttpStatus.OK, "코드 상세 수정에 성공하였습니다."),
     GET_SITTER_SERVICE_SUCCESS(HttpStatus.OK, "서비스 목록 조회에 성공하였습니다."),
     GET_SERVICE_DETAIL_SUCCESS(HttpStatus.OK, "서비스 상세 조회에 성공하였습니다."),
+    UPDATE_SERVICE_DETAIL_SUCCESS(HttpStatus.OK, "서비스 상세 수정에 성공하였습니다."),
 
     /**
      * 201 OK

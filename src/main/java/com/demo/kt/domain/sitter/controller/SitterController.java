@@ -1,5 +1,6 @@
 package com.demo.kt.domain.sitter.controller;
 
+import com.demo.kt.domain.sitter.dto.ServiceDetailDto;
 import com.demo.kt.domain.sitter.dto.ServiceDetailResponseDto;
 import com.demo.kt.domain.sitter.dto.ServiceRegistrationDto;
 import com.demo.kt.domain.sitter.dto.SitterHomeDto;
@@ -73,26 +74,40 @@ public class SitterController implements SitterApi {
     @PostMapping("/services/registration")
     public ResponseEntity<ApiResponse<?>> serviceRegistration(Principal principal,
             @RequestBody ServiceRegistrationDto serviceRegistrationDto) {
-        return ResponseEntity.ok(ApiResponse.success(SuccessType.CREATE_SERVICE_SUCCESS, servicesService.registerService(principal.getName(), serviceRegistrationDto)));
+        return ResponseEntity.ok(ApiResponse.success(SuccessType.CREATE_SERVICE_SUCCESS,
+                servicesService.registerService(principal.getName(), serviceRegistrationDto)));
     }
 
     @Override
     @GetMapping("/services")
-    public ResponseEntity<ApiResponse<List<SitterServiceResponseDto>>> myServices(Principal principal) {
+    public ResponseEntity<ApiResponse<List<SitterServiceResponseDto>>> myServices(
+            Principal principal) {
         return ResponseEntity.ok(ApiResponse.success(SuccessType.GET_SITTER_SERVICE_SUCCESS,
                 servicesService.myServices(principal.getName())));
     }
 
     @Override
     @DeleteMapping("/services/{id}")
-    public ResponseEntity<ApiResponse<?>> deleteService(Principal principal, @PathVariable("id") Long id) {
+    public ResponseEntity<ApiResponse<?>> deleteService(Principal principal,
+            @PathVariable("id") Long id) {
         servicesService.deleteService(principal.getName(), id);
         return ResponseEntity.ok(ApiResponse.success(SuccessType.DELETE_SERVICE_SUCCESS));
     }
 
     @Override
     @GetMapping("/services/{id}")
-    public ResponseEntity<ApiResponse<ServiceDetailResponseDto>> serviceDetail(Principal principal, @PathVariable("id") Long id) {
-        return ResponseEntity.ok(ApiResponse.success(SuccessType.GET_SERVICE_DETAIL_SUCCESS, servicesService));
+    public ResponseEntity<ApiResponse<ServiceDetailResponseDto>> serviceDetail(Principal principal,
+            @PathVariable("id") Long id) {
+        return ResponseEntity.ok(ApiResponse.success(SuccessType.GET_SERVICE_DETAIL_SUCCESS,
+                servicesService.getDetail(principal.getName(), id)));
+    }
+
+    @Override
+    @PutMapping("/services")
+    public ResponseEntity<ApiResponse<?>> updateServiceDetail(Principal principal,
+            @RequestBody ServiceDetailDto serviceDetailDto) {
+        servicesService.updateDetail(serviceDetailDto);
+        return ResponseEntity.ok(
+                ApiResponse.success(SuccessType.UPDATE_SERVICE_DETAIL_SUCCESS));
     }
 }

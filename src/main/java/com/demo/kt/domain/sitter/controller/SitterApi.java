@@ -1,5 +1,6 @@
 package com.demo.kt.domain.sitter.controller;
 
+import com.demo.kt.domain.sitter.dto.ServiceDetailDto;
 import com.demo.kt.domain.sitter.dto.ServiceDetailResponseDto;
 import com.demo.kt.domain.sitter.dto.ServiceRegistrationDto;
 import com.demo.kt.domain.sitter.dto.SitterHomeDto;
@@ -47,5 +48,10 @@ public interface SitterApi {
     ResponseEntity<ApiResponse<?>> deleteService(Principal principal, Long id);
 
     @Operation(summary = "펫시터 서비스 상세 조회")
-    ResponseEntity<ApiResponse<ServiceDetailResponseDto>> serviceDetail(Principal principal, Long id);
+    ResponseEntity<ApiResponse<ServiceDetailResponseDto>> serviceDetail(Principal principal,
+            Long id);
+
+    @Operation(summary = "펫시터 서비스 수정")
+    ResponseEntity<ApiResponse<?>> updateServiceDetail(Principal principal,
+            ServiceDetailDto serviceDetailDto);
 }

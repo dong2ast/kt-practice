@@ -2,6 +2,7 @@ package com.demo.kt.domain.sitter.service;
 
 import com.demo.kt.domain.member.repository.MemberRepository;
 import com.demo.kt.domain.sitter.dto.ScheduleDto;
+import com.demo.kt.domain.sitter.dto.ServiceDetailDto;
 import com.demo.kt.domain.sitter.dto.ServiceDetailResponseDto;
 import com.demo.kt.domain.sitter.dto.ServiceRegistrationDto;
 import com.demo.kt.domain.sitter.dto.SitterServiceResponseDto;
@@ -34,7 +35,8 @@ public class PetSitterServicesService {
 
     @Transactional
     public SitterServiceResponseDto registerService(String email, ServiceRegistrationDto request) {
-        PetSitter petSitter = memberRepository.findByEmail(email).orElseThrow(() -> new CustomException(
+        PetSitter petSitter = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(
                         ErrorType.NOT_FOUND_MEMBER_ERROR)).getPetSitter();
 
         PetSitterServices service = PetSitterServices.builder()
@@ -60,24 +62,26 @@ public class PetSitterServicesService {
                 .collect(Collectors.toList());
 
         List<Schedule> scheduleEntities = request.schedule().stream()
-        .map(dto -> Schedule.builder()
-            .services(service)
-            .day(dto.day())  // 요일 (문자열)
-            .startTime(dto.startTime()) // "HH:mm" 형태
-            .endTime(dto.endTime()) // "HH:mm" 형태
-            .build())
-        .toList();
+                .map(dto -> Schedule.builder()
+                        .services(service)
+                        .day(dto.day())  // 요일 (문자열)
+                        .startTime(dto.startTime()) // "HH:mm" 형태
+                        .endTime(dto.endTime()) // "HH:mm" 형태
+                        .build())
+                .toList();
 
         serviceTypeRepository.saveAll(serviceTypeEntities);
         dogSizeRepository.saveAll(dogSizeEntities);
         scheduleRepository.saveAll(scheduleEntities);
 
-        return new SitterServiceResponseDto(service.getId(), service.getLocation(), service.getSpecies(), service.getPrice(), service.getImage());
+        return new SitterServiceResponseDto(service.getId(), service.getLocation(),
+                service.getSpecies(), service.getPrice(), service.getImage());
     }
 
     public List<SitterServiceResponseDto> myServices(String email) {
         PetSitter petSitter = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR)).getPetSitter();
+                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR))
+                .getPetSitter();
 
         return petSitterServicesRepository.findAllByPetSitter(petSitter).stream()
                 .map(SitterServiceResponseDto::of).toList();
@@ -86,7 +90,8 @@ public class PetSitterServicesService {
     @Transactional
     public void deleteService(String email, Long id) {
         PetSitter petSitter = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR)).getPetSitter();
+                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR))
+                .getPetSitter();
 
         PetSitterServices petSitterServices = petSitterServicesRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_SERVICE_ERROR));
@@ -98,7 +103,8 @@ public class PetSitterServicesService {
 
     public ServiceDetailResponseDto getDetail(String email, Long id) {
         PetSitter petSitter = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR)).getPetSitter();
+                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR))
+                .getPetSitter();
 
         PetSitterServices petSitterServices = petSitterServicesRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_SERVICE_ERROR));
@@ -107,6 +113,27 @@ public class PetSitterServicesService {
 
         return ServiceDetailResponseDto.of(petSitter, petSitterServices, schedules.stream().map(
                 ScheduleDto::of).toList());
+    }
+
+    @Transactional
+    public void updateDetail(ServiceDetailDto serviceDetailDto) {
+        PetSitterServices petSitterServices = petSitterServicesRepository.findById(
+                serviceDetailDto.id()).orElseThrow();
+
+        scheduleRepository.deleteAllByServices(petSitterServices);
+
+        List<Schedule> scheduleEntities = serviceDetailDto.schedule().stream()
+                .map(dto -> Schedule.builder()
+                        .services(petSitterServices)
+                        .day(dto.day())  // 요일 (문자열)
+                        .startTime(dto.startTime()) // "HH:mm" 형태
+                        .endTime(dto.endTime()) // "HH:mm" 형태
+                        .build())
+                .toList();
+
+        scheduleRepository.saveAll(scheduleEntities);
+        petSitterServices.update(serviceDetailDto, scheduleEntities);
+
     }
 
 }
