@@ -13,7 +13,7 @@ public class AuthWhiteList {
 
     public static final List<String> AUTH_WHITELIST_WILDCARD = Arrays.asList(
             "/swagger-ui/**", "/swagger-resources/**", "/api-docs/**", "/v3/api-docs/**",
-            "/actuator/**"
+            "/actuator/**", "/api/v1/code-groups/**", "/api/v1/code-details/**"
     );
 
     public static final String[] AUTH_WHITELIST = Stream.concat(
