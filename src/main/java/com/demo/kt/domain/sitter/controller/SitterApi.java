@@ -54,4 +54,19 @@ public interface SitterApi {
     @Operation(summary = "펫시터 서비스 수정")
     ResponseEntity<ApiResponse<?>> updateServiceDetail(Principal principal,
             ServiceDetailDto serviceDetailDto);
+
+    @Operation(summary = "펫시터 서비스 홈")
+    ResponseEntity<ApiResponse<List<SitterServiceResponseDto>>> serviceHome(Principal principal);
+
+    @Operation(summary = "(사용자) 펫시터 서비스 요청")
+    ResponseEntity<ApiResponse<?>> serviceRequest(Principal principal, Long id);
+
+    @Operation(summary = "(사용자) 펫시터 서비스 요청 목록 조회")
+    ResponseEntity<ApiResponse<?>> myRequests(Principal principal);
+
+    @Operation(summary = "신청 현황 조회")
+    ResponseEntity<ApiResponse<?>> requestsToSitter(Principal principal);
+
+    @Operation(summary = "신청 수락")
+    ResponseEntity<ApiResponse<?>> acceptRequest(Principal principal, Long id);
 }

@@ -110,4 +110,30 @@ public class SitterController implements SitterApi {
         return ResponseEntity.ok(
                 ApiResponse.success(SuccessType.UPDATE_SERVICE_DETAIL_SUCCESS));
     }
+
+    @Override
+    public ResponseEntity<ApiResponse<List<SitterServiceResponseDto>>> serviceHome(
+            Principal principal) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse<?>> serviceRequest(Principal principal, Long id) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse<?>> myRequests(Principal principal) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse<?>> requestsToSitter(Principal principal) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse<?>> acceptRequest(Principal principal, Long id) {
+        return null;
+    }
 }
