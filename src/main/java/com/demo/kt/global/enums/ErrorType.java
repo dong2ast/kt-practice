@@ -44,6 +44,7 @@ public enum ErrorType {
     NOT_FOUND_REFRESH_TOKEN_ERROR(HttpStatus.NOT_FOUND, "존재하지 않는 리프레시 토큰입니다."),
     NOT_FOUND_CODE_GROUPS_ERROR(HttpStatus.NOT_FOUND, "존재하지 않는 코드 그룹입니다."),
     NOT_FOUND_CODE_ERROR(HttpStatus.NOT_FOUND, "존재하지 않는 코드입니다."),
+    NOT_FOUND_SERVICE_ERROR(HttpStatus.NOT_FOUND, "존재하지 않는 서비스입니다."),
 
     /**
      * 409 CONFLICT

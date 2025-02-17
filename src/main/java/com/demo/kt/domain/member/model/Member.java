@@ -4,6 +4,7 @@ import com.demo.kt.domain.sitter.model.PetSitter;
 import com.demo.kt.global.common.model.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
@@ -31,7 +32,7 @@ public class Member extends BaseTimeEntity {
     private String phone;
 
     @Setter
-    @OneToOne(mappedBy = "member", orphanRemoval = true)
+    @OneToOne(mappedBy = "member", orphanRemoval = true, fetch = FetchType.EAGER)
     private PetSitter petSitter;
 
     public void updateProfile(String name, String phone) {

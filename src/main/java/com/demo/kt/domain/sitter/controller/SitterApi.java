@@ -1,14 +1,18 @@
 package com.demo.kt.domain.sitter.controller;
 
+import com.demo.kt.domain.sitter.dto.ServiceDetailResponseDto;
+import com.demo.kt.domain.sitter.dto.ServiceRegistrationDto;
+import com.demo.kt.domain.sitter.dto.SitterHomeDto;
 import com.demo.kt.domain.sitter.dto.SitterProfileResponseDto;
 import com.demo.kt.domain.sitter.dto.SitterProfileUpdateDto;
-import com.demo.kt.domain.sitter.dto.SitterHomeDto;
 import com.demo.kt.domain.sitter.dto.SitterRegistrationDto;
+import com.demo.kt.domain.sitter.dto.SitterServiceResponseDto;
 import com.demo.kt.global.common.dto.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.security.Principal;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 @Tag(name = "Sitter", description = "펫시터 API")
@@ -31,4 +35,17 @@ public interface SitterApi {
 
     @Operation(summary = "펫시터 프로필 삭제")
     ResponseEntity<ApiResponse<?>> delete(Principal principal);
+
+    @Operation(summary = "펫시터 서비스 등록")
+    ResponseEntity<ApiResponse<?>> serviceRegistration(Principal principal,
+            ServiceRegistrationDto serviceRegistrationDto);
+
+    @Operation(summary = "펫시터 서비스 조회")
+    ResponseEntity<ApiResponse<List<SitterServiceResponseDto>>> myServices(Principal principal);
+
+    @Operation(summary = "펫시터 서비스 삭제")
+    ResponseEntity<ApiResponse<?>> deleteService(Principal principal, Long id);
+
+    @Operation(summary = "펫시터 서비스 상세 조회")
+    ResponseEntity<ApiResponse<ServiceDetailResponseDto>> serviceDetail(Principal principal, Long id);
 }

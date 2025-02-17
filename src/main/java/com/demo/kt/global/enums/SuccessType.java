@@ -23,6 +23,8 @@ public enum SuccessType {
     GET_CODE_DETAIL_SUCCESS(HttpStatus.OK, "코드 상세 조회에 성공하였습니다."),
     UPDATE_CODE_GROUPS_SUCCESS(HttpStatus.OK, "코드 그룹 수정에 성공하였습니다."),
     UPDATE_CODE_DETAIL_SUCCESS(HttpStatus.OK, "코드 상세 수정에 성공하였습니다."),
+    GET_SITTER_SERVICE_SUCCESS(HttpStatus.OK, "서비스 목록 조회에 성공하였습니다."),
+    GET_SERVICE_DETAIL_SUCCESS(HttpStatus.OK, "서비스 상세 조회에 성공하였습니다."),
 
     /**
      * 201 OK
@@ -31,6 +33,7 @@ public enum SuccessType {
     SITTER_REGISTRATION_SUCCESS(HttpStatus.CREATED, "펫시터 등록에 성공하였습니다"),
     CREATE_CODE_GROUP_SUCCESS(HttpStatus.CREATED, "코드 그룹 생성에 성공하였습니다"),
     CREATE_CODE_DETAIL_SUCCESS(HttpStatus.CREATED, "코드 상세 생성에 성공하였습니다"),
+    CREATE_SERVICE_SUCCESS(HttpStatus.CREATED, "서비스 등록에 성공하였습니다"),
 
     /**
      * 204 OK
@@ -39,6 +42,7 @@ public enum SuccessType {
     DELETE_SITTER_PROFILE_SUCCESS(HttpStatus.NO_CONTENT, "펫시터 탈퇴에 성공하였습니다"),
     DELETE_CODE_GROUP_SUCCESS(HttpStatus.NO_CONTENT, "코드 그룹 삭제에 성공하였습니다"),
     DELETE_CODE_DETAIL_SUCCESS(HttpStatus.NO_CONTENT, "코드 상세 삭제에 성공하였습니다"),
+    DELETE_SERVICE_SUCCESS(HttpStatus.NO_CONTENT, "서비스 삭제에 성공하였습니다"),
     ;
 
     private final HttpStatus httpStatus;
