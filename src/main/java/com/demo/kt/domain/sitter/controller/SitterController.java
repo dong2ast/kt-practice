@@ -112,22 +112,9 @@ public class SitterController implements SitterApi {
     }
 
     @Override
-    public ResponseEntity<ApiResponse<?>> serviceRequest(Principal principal, Long id) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<ApiResponse<?>> myRequests(Principal principal) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<ApiResponse<?>> requestsToSitter(Principal principal) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<ApiResponse<?>> acceptRequest(Principal principal, Long id) {
-        return null;
+    @PostMapping("/services/{id}")
+    public ResponseEntity<ApiResponse<?>> serviceRequest(Principal principal, @PathVariable("id") Long serviceId) {
+        servicesService.bookService(principal.getName(), serviceId);
+        return ResponseEntity.ok(ApiResponse.success(SuccessType.CREATE_BOOK_SUCCESS));
     }
 }

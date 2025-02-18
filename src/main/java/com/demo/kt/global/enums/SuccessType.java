@@ -35,6 +35,7 @@ public enum SuccessType {
     CREATE_CODE_GROUP_SUCCESS(HttpStatus.CREATED, "코드 그룹 생성에 성공하였습니다"),
     CREATE_CODE_DETAIL_SUCCESS(HttpStatus.CREATED, "코드 상세 생성에 성공하였습니다"),
     CREATE_SERVICE_SUCCESS(HttpStatus.CREATED, "서비스 등록에 성공하였습니다"),
+    CREATE_BOOK_SUCCESS(HttpStatus.CREATED, "서비스 예약 요청에 성공하였습니다"),
 
     /**
      * 204 OK

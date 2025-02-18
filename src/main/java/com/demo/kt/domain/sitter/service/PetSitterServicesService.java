@@ -7,11 +7,13 @@ import com.demo.kt.domain.sitter.dto.ServiceDetailDto;
 import com.demo.kt.domain.sitter.dto.ServiceDetailResponseDto;
 import com.demo.kt.domain.sitter.dto.ServiceRegistrationDto;
 import com.demo.kt.domain.sitter.dto.SitterServiceResponseDto;
+import com.demo.kt.domain.sitter.model.Book;
 import com.demo.kt.domain.sitter.model.DogSizeEntity;
 import com.demo.kt.domain.sitter.model.PetSitter;
 import com.demo.kt.domain.sitter.model.PetSitterServices;
 import com.demo.kt.domain.sitter.model.Schedule;
 import com.demo.kt.domain.sitter.model.ServiceTypeEntity;
+import com.demo.kt.domain.sitter.repository.BookRepository;
 import com.demo.kt.domain.sitter.repository.DogSizeRepository;
 import com.demo.kt.domain.sitter.repository.PetSitterServicesRepository;
 import com.demo.kt.domain.sitter.repository.ScheduleRepository;
@@ -34,6 +36,7 @@ public class PetSitterServicesService {
     private final DogSizeRepository dogSizeRepository;
     private final ScheduleRepository scheduleRepository;
     private final MemberRepository memberRepository;
+    private final BookRepository bookRepository;
 
     @Transactional
     public SitterServiceResponseDto registerService(String email, ServiceRegistrationDto request) {
@@ -140,6 +143,23 @@ public class PetSitterServicesService {
         scheduleRepository.saveAll(scheduleEntities);
         petSitterServices.update(serviceDetailDto, scheduleEntities);
 
+    }
+
+    @Transactional
+    public void bookService(String email, Long serviceId) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR));
+
+        PetSitterServices petSitterServices = petSitterServicesRepository.findById(
+                serviceId).orElseThrow();
+
+        PetSitter petSitter = petSitterServices.getPetSitter();
+
+        bookRepository.save(Book.builder()
+                .customerId(member.getId())
+                .serviceId(petSitterServices.getId())
+                .sitterId(petSitter.getId())
+                .build());
     }
 
 }
