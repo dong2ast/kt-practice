@@ -55,9 +55,6 @@ public interface SitterApi {
     ResponseEntity<ApiResponse<?>> updateServiceDetail(Principal principal,
             ServiceDetailDto serviceDetailDto);
 
-    @Operation(summary = "펫시터 서비스 홈")
-    ResponseEntity<ApiResponse<List<SitterServiceResponseDto>>> serviceHome(Principal principal);
-
     @Operation(summary = "(사용자) 펫시터 서비스 요청")
     ResponseEntity<ApiResponse<?>> serviceRequest(Principal principal, Long id);
 

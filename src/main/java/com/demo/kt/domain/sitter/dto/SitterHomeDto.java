@@ -1,8 +1,10 @@
 package com.demo.kt.domain.sitter.dto;
 
+import java.util.List;
+
 public record SitterHomeDto(
-        Boolean isSitter
-        //TODO 펫시터 서비스 목록
+        Boolean isSitter,
+        List<SitterServiceResponseDto> sitterServiceResponseDtos
 ) {
 
 }

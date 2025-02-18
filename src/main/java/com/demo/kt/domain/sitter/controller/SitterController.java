@@ -112,12 +112,6 @@ public class SitterController implements SitterApi {
     }
 
     @Override
-    public ResponseEntity<ApiResponse<List<SitterServiceResponseDto>>> serviceHome(
-            Principal principal) {
-        return null;
-    }
-
-    @Override
     public ResponseEntity<ApiResponse<?>> serviceRequest(Principal principal, Long id) {
         return null;
     }
