@@ -6,7 +6,9 @@ import com.demo.kt.domain.sitter.dto.SitterHomeDto;
 import com.demo.kt.domain.sitter.dto.SitterProfileResponseDto;
 import com.demo.kt.domain.sitter.dto.SitterProfileUpdateDto;
 import com.demo.kt.domain.sitter.dto.SitterRegistrationDto;
+import com.demo.kt.domain.sitter.dto.SitterServiceResponseDto;
 import com.demo.kt.domain.sitter.model.PetSitter;
+import com.demo.kt.domain.sitter.repository.PetSitterServicesRepository;
 import com.demo.kt.domain.sitter.repository.SitterRepository;
 import com.demo.kt.global.enums.ErrorType;
 import com.demo.kt.global.exception.model.CustomException;
@@ -20,6 +22,7 @@ public class SitterService {
 
     private final MemberRepository memberRepository;
     private final SitterRepository sitterRepository;
+    private final PetSitterServicesRepository petSitterServicesRepository;
 
     @Transactional
     public void registration(String email, SitterRegistrationDto sitterRegistrationDto) {
@@ -35,7 +38,8 @@ public class SitterService {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR));
 
-        return new SitterHomeDto(member.isSitter());
+        return new SitterHomeDto(member.isSitter(), petSitterServicesRepository.findAll().stream().map(
+                SitterServiceResponseDto::of).toList());
     }
 
     public SitterProfileResponseDto profile(String email) {

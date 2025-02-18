@@ -3,7 +3,6 @@ package com.demo.kt.domain.sitter.dto;
 import com.demo.kt.domain.sitter.model.PetSitter;
 import com.demo.kt.domain.sitter.model.PetSitterServices;
 import java.util.List;
-import java.util.Objects;
 
 public record ServiceDetailResponseDto(
         Long id,
@@ -15,10 +14,10 @@ public record ServiceDetailResponseDto(
 ) {
 
     public static ServiceDetailResponseDto of(PetSitter petSitter,
-            PetSitterServices petSitterServices, List<ScheduleDto> scheduleDtos) {
+            PetSitterServices petSitterServices, List<ScheduleDto> scheduleDtos, Boolean isOwner) {
         return new ServiceDetailResponseDto(petSitterServices.getId(),
                 petSitterServices.getLocation(),
                 petSitterServices.getSpecies(), petSitterServices.getPrice(), scheduleDtos,
-                Objects.equals(petSitterServices.getPetSitter().getId(), petSitter.getId()));
+                isOwner);
     }
 }

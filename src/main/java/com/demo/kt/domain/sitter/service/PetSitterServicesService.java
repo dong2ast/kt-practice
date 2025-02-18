@@ -1,5 +1,6 @@
 package com.demo.kt.domain.sitter.service;
 
+import com.demo.kt.domain.member.model.Member;
 import com.demo.kt.domain.member.repository.MemberRepository;
 import com.demo.kt.domain.sitter.dto.ScheduleDto;
 import com.demo.kt.domain.sitter.dto.ServiceDetailDto;
@@ -19,6 +20,7 @@ import com.demo.kt.global.enums.ErrorType;
 import com.demo.kt.global.exception.model.CustomException;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -102,17 +104,21 @@ public class PetSitterServicesService {
     }
 
     public ServiceDetailResponseDto getDetail(String email, Long id) {
-        PetSitter petSitter = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR))
-                .getPetSitter();
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR));
 
         PetSitterServices petSitterServices = petSitterServicesRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_SERVICE_ERROR));
 
         List<Schedule> schedules = scheduleRepository.findAllByServices(petSitterServices);
 
-        return ServiceDetailResponseDto.of(petSitter, petSitterServices, schedules.stream().map(
-                ScheduleDto::of).toList());
+        if (member.getPetSitter() == null) {
+            return ServiceDetailResponseDto.of(petSitterServices.getPetSitter(), petSitterServices, schedules.stream().map(
+                ScheduleDto::of).toList(), false);
+        }
+
+        return ServiceDetailResponseDto.of(petSitterServices.getPetSitter(), petSitterServices, schedules.stream().map(
+                ScheduleDto::of).toList(), Objects.equals(member.getPetSitter().getId(), petSitterServices.getPetSitter().getId()));
     }
 
     @Transactional
