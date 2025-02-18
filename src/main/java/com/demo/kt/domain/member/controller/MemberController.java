@@ -1,14 +1,13 @@
 package com.demo.kt.domain.member.controller;
 
 import com.demo.kt.domain.member.dto.LoginRequestDto;
-import com.demo.kt.domain.member.dto.MemberInfoDto;
 import com.demo.kt.domain.member.dto.LoginResponseDto;
 import com.demo.kt.domain.member.dto.MemberDetailDto;
+import com.demo.kt.domain.member.dto.MemberInfoDto;
 import com.demo.kt.domain.member.dto.SignUpDto;
 import com.demo.kt.domain.member.service.MemberService;
 import com.demo.kt.global.common.dto.ApiResponse;
 import com.demo.kt.global.enums.SuccessType;
-import com.demo.kt.global.security.jwt.TokenDto;
 import jakarta.validation.Valid;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +44,7 @@ public class MemberController implements MemberApi {
     }
 
     @Override
-    @PostMapping
+    @PostMapping("/logout")
     public ResponseEntity<ApiResponse<?>> logout(
             Principal principal) {
         memberService.logout(principal.getName());
